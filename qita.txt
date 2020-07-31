@@ -1,0 +1,13 @@
+https://livelypeng.github.io/pl-drag-template/pl-drag-dist/index.html#/editor/index
+https://github.com/livelyPeng/vue-form-making
+
+https://yi-jy.com/2013/08/24/html5-drag/
+
+
+https://github.com/smileyby/canvasDrag
+
+
+https://github.com/keith-dan/LionJs
+
+
+https://github.com/keith-dan/LionJs/blob/master/script/lion.js

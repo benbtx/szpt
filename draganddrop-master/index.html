@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function allowDrop(ev) { // 元素时放点是否允许元素被拖出
+            ev.preventDefault()
+        }
+        function drag(ev) { // 即将被拖放的元素
+            console.log(ev)
+            ev.dataTransfer.setData('Text',ev.target.id)
+        }
+        function drop(ev) { // 收纳元素点的如何接纳拖放的元素
+            ev.preventDefault()
+            var data = ev.dataTransfer.getData('Text') //
+            ev.target.appendChild(document.getElementById(data))
+        }
+        function createElement(tag, attr, children) { // 创建dom对象
+            if (typeof tag !== 'string' || tag === '') {
+                console.error('the type of tag is not string')
+                return null
+            }
+            if (attr && Object.prototype.toString.call(attr) !== '[object Object]') {
+                console.error('the type of attr is not json object')
+                return null
+            }
+            if (children && Object.prototype.toString.call(children) !== '[object Array]') {
+                console.error('the type of children is not array')
+                return null
+            }
+            var el = document.createElement(tag)
+            if (attr) {
+                if (attr.class) {
+                    attr.className = attr.class
+                    delete attr.class
+                }
+                Object.assign(el, attr)
+            }
+            if (children) {
+                children.forEach(function(child){
+                    var e = createElement(child.tag, child.attr, child.children)
+                    el.appendChild(e)
+                })
+            }
+            return el
+        }
+        var el = createElement(
+            'div', 
+            {
+                id: 'div1',
+                ondrop:drop,
+                ondragover:allowDrop,
+                style: 'width:100%;height:300px;border:1px solid #000;'
+            },
+            [{
+                tag: 'div',
+                attr: {
+                    id:  'drag1',
+                    innerText: 'drag',
+                    draggable: true,
+                    ondragstart: drag,
+                    style: 'width:100px;height:100px;border:1px solid #000;line-height:100px;text-align:center;'
+                }
+            }]
+        )
+        var elV2 = createElement(
+            'div',
+            {
+                id: 'div2',
+                ondrop:drop,
+                ondragover:allowDrop,
+                style: 'width:100%;height:300px;border:1px solid #000;'
+            }
+        )
+        var body = document.querySelector('body')
+        body.appendChild(el)
+        body.appendChild(elV2)
+    </script>
+</body>
+</html>
